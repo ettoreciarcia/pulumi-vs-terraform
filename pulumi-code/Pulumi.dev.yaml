@@ -1,0 +1,10 @@
+config:
+  aws:region: eu-west-1
+  pulumi:template: https://github.com/pulumi/templates/tree/master/static-website-aws-go
+  static-website-aws-go:errorDocument: error.html
+  static-website-aws-go:indexDocument: index.html
+  static-website-aws-go:path: ./www
+  static-website-aws-go:domainName: pulumi.ettoreciarcia.com
+  static-website-aws-go:zoneId: Z04217553VJM3IP6I6W8T
+  static-website-aws-go:acmCertificateArn: arn:aws:acm:us-east-1:860443674636:certificate/179e49d6-9330-4bb4-9d62-bb53ead3cbc1
+
