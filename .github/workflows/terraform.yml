@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-    paths:
-        - 'terraform-code/**'
+    # paths:
+    #     - 'terraform-code/**'
   pull_request:
-    paths:
-      - 'terraform-code/**'
+    # paths:
+    #   - 'terraform-code/**'
 
 jobs:
   terraform:
