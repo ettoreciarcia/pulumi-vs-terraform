@@ -1,0 +1,46 @@
+name: Terraform
+
+on:
+  push:
+    branches:
+      - main
+    # paths:
+    #   - 'terraform-code/**'
+  pull_request:
+    # paths:
+    #   - 'terraform-code/**'
+
+jobs:
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.9
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        run: terraform -chdir=terraform-code init
+
+      - name: Terraform Validate
+        run: terraform -chdir=terraform-code validate
+
+      - name: Terraform Plan
+        if: github.event_name == 'pull_request'
+        run: terraform -chdir=terraform-code plan -input=false -lock=false -no-color
+        continue-on-error: true
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform -chdir=terraform-code apply -input=false -auto-approve
+
+      - name: Terraform Apply with Varfile
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          TF_VAR_varfile_path: ./terraform-code/terraform.tfvars
+        run: terraform -chdir=terraform-code apply -var-file="${{ env.TF_VAR_varfile_path }}" -input=false -auto-approve
