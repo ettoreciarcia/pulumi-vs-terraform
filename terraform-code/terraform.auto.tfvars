@@ -1,0 +1,7 @@
+region              = "eu-west-1"
+application_name    = "terraform"
+bucket_suffix       = "golang-napoli"
+environment         = "dev"
+acm_certificate_arn = "arn:aws:acm:us-east-1:860443674636:certificate/179e49d6-9330-4bb4-9d62-bb53ead3cbc1"
+domain_name         = "terraform.ettoreciarcia.com"
+route53_zone_id     = "Z04217553VJM3IP6I6W8T"
