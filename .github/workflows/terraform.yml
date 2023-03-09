@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+        - 'terraform-code/**'
   pull_request:
+    paths:
+      - 'terraform-code/**'
 
 jobs:
   terraform:
@@ -22,20 +26,21 @@ jobs:
 
       - name: Terraform Format
         id: fmt
-        run: terraform fmt -check
+        run: terraform fmt -check ./terraform-code
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: terraform init ./terraform-code
+
 
       - name: Terraform Validate
         id: validate
-        run: terraform validate -no-color
+        run: terraform validate -no-color ./terraform-code
 
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color -input=false
+        run: terraform plan -no-color -input=false ./terraform-code
         continue-on-error: true
 
       - uses: actions/github-script@v6
@@ -73,4 +78,4 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
+        run: terraform apply -auto-approve -input=false ./terraform-code
