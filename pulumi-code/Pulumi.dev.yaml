@@ -7,4 +7,3 @@ config:
   static-website-aws-go:domainName: pulumi.ettoreciarcia.com
   static-website-aws-go:zoneId: Z04217553VJM3IP6I6W8T
   static-website-aws-go:acmCertificateArn: arn:aws:acm:us-east-1:860443674636:certificate/179e49d6-9330-4bb4-9d62-bb53ead3cbc1
-
