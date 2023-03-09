@@ -78,4 +78,4 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform -chdir=terraform-code  apply -var-file=terraform.auto.tfvars -auto-approve -input=false
+        run: terraform -chdir=terraform-code  apply -var-file=terraform-code/terraform.auto.tfvars -auto-approve -input=false
