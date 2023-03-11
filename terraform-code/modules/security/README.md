@@ -23,8 +23,8 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_iam_policy.github_actions_policy](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_user.github_actions](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user_policy_attachment.github_actions_policy_attachment](https://registry.terraform.io/providers/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user.github_actions](https://registry.terraform.io/providers/aws/latest/docs/data-sources/iam_user) | data source |
 
 ## Inputs
 
@@ -32,6 +32,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_bucket_arn"></a> [bucket\_arn](#input\_bucket\_arn) | n/a | `string` | n/a | yes |
 | <a name="input_cloudfront_distribution_arn"></a> [cloudfront\_distribution\_arn](#input\_cloudfront\_distribution\_arn) | n/a | `string` | n/a | yes |
+| <a name="input_pipeline_user"></a> [pipeline\_user](#input\_pipeline\_user) | n/a | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | List tags to pass to resources | `map(string)` | `{}` | no |
 
 ## Outputs

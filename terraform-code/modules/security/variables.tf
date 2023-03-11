@@ -11,3 +11,7 @@ variable "bucket_arn" {
 variable "cloudfront_distribution_arn" {
   type = string
 }
+
+variable "pipeline_user" {
+  type = string
+}
