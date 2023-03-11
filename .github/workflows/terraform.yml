@@ -49,6 +49,7 @@ jobs:
 
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
+        working-directory: ./terraform-code
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         with:
@@ -79,6 +80,7 @@ jobs:
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
+        working-directory: ./terraform-code
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
