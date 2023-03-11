@@ -30,3 +30,8 @@ variable "route53_zone_id" {
 variable "bucket_suffix" {
   type = string
 }
+
+variable "pipeline_user" {
+  type = string
+
+}

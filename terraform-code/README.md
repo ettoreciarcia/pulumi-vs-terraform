@@ -35,6 +35,7 @@ No resources.
 | <a name="input_bucket_suffix"></a> [bucket\_suffix](#input\_bucket\_suffix) | n/a | `string` | n/a | yes |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Domain name to use for the CloudFront distribution | `string` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment of the application dev/test/prod | `string` | n/a | yes |
+| <a name="input_pipeline_user"></a> [pipeline\_user](#input\_pipeline\_user) | n/a | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | n/a | yes |
 | <a name="input_route53_zone_id"></a> [route53\_zone\_id](#input\_route53\_zone\_id) | Route53 zone ID | `string` | n/a | yes |
 

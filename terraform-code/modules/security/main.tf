@@ -12,11 +12,10 @@ locals {
   environment      = var.tags["Environment"]
 }
 
-//create iam user for github actions to deploy to s3 bucket and cloudfront
-resource "aws_iam_user" "github_actions" {
-  name = "github-actions-${local.application_name}-${local.environment}"
+// get iam user for github action called golanf-napoli
+data "aws_iam_user" "github_actions" {
+  user_name = var.pipeline_user
 }
-
 
 //create iam policy to grant all priviles on a single bucket and invalidate CDN
 resource "aws_iam_policy" "github_actions_policy" {
@@ -49,6 +48,6 @@ POLICY
 
 //attach policy to user
 resource "aws_iam_user_policy_attachment" "github_actions_policy_attachment" {
-  user       = aws_iam_user.github_actions.name
+  user       = data.aws_iam_user.github_actions.user_name
   policy_arn = aws_iam_policy.github_actions_policy.arn
 }
