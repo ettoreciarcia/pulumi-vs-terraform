@@ -1,0 +1,7 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'Hello, Golang Napoli!'
+theme = 'hugo-theme-air'
+
+[params]
+  description = "A sample static website for testing purpose"
