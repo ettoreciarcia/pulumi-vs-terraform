@@ -32,7 +32,7 @@ provider "aws" {
   }
 }
 
-module "infrastructure" {
+module "infra" {
   source              = "./modules/infra"
   acm_certificate_arn = var.acm_certificate_arn
   domain_name         = var.domain_name
@@ -41,10 +41,10 @@ module "infrastructure" {
   bucket_suffix       = var.bucket_suffix
 }
 
-module "iam" {
+module "security" {
   source                      = "./modules/security"
-  bucket_arn                  = module.infrastructure.bucket_arn
-  cloudfront_distribution_arn = module.infrastructure.cloudfront_distribution_arn
+  bucket_arn                  = module.infra.bucket_arn
+  cloudfront_distribution_arn = module.infra.cloudfront_distribution_arn
   tags                        = local.common_tags
   pipeline_user               = var.pipeline_user
 }
