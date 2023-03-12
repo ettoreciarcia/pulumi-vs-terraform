@@ -17,7 +17,8 @@ locals {
 
 
 resource "aws_s3_bucket" "website" {
-  bucket = "${local.application_name}-${var.bucket_suffix}"
+  bucket        = "${local.application_name}-${var.bucket_suffix}"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_acl" "bucket_acl" {

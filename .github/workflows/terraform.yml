@@ -85,3 +85,10 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
         working-directory: ./terraform-code
+
+      - name: Print Terraform Outputs
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          terraform output -json > outputs.json
+          cat outputs.json
+        working-directory: ./terraform-code
