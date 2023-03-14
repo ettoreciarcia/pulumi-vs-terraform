@@ -163,53 +163,32 @@ func main() {
 			return err
 		}
 
-		// createPolicy to grant all permission on s3 bucket and cloudfront
+		//Create iam policy to grant all permission on s3 bucket and cloudfront
+
+		json0 := string(tmpJSON0)
 		policy, err := iam.NewPolicy(ctx, "policy", &iam.PolicyArgs{
-			Description: pulumi.String("Policy to grant all permission on s3 bucket and cloudfront"),
 			Path:        pulumi.String("/"),
-			Policy: pulumi.String(fmt.Sprintf(`{
-				"Version": "2012-10-17",
-				"Statement": [
-					{
-						"Effect": "Allow",
-						"Action": [
-							"s3:*"
-						],
-						"Resource": [
-							"%s"
-						]
-					},
-					{
-						"Effect": "Allow",
-						"Action": [
-							"cloudfront:*"
-						],
-						"Resource": [
-							"%s"
-						]
-					}
-				]
-			}`, bucket.Arn, cdn.Arn)),
+			Description: pulumi.String("My test policy"),
+			Policy:      pulumi.String(json0),
 		})
 		if err != nil {
 			return err
 		}
 
 		//attacch this policy to existing user demo-iac-golang-napoli
-		// _, err = iam.NewPolicyAttachment(ctx, "policy-attachment", &iam.PolicyAttachmentArgs{
-		// 	PolicyArn: policy.Arn,
-		// 	Users:     pulumi.String("demo-iac-golang-napoli"),
-		// })
-		// if err != nil {
-		// 	return err
-		// }
+		_, err = iam.NewUserPolicyAttachment(ctx, "test-attach", &iam.UserPolicyAttachmentArgs{
+			User:      pulumi.String("demo-iac-golang-napoli"),
+			PolicyArn: policy.Arn,
+		})
+		if err != nil {
+			return err
+		}
 
 		// Export the URLs and hostnames of the bucket and distribution.
 		ctx.Export("originURL", pulumi.Sprintf("http://%s", bucket.WebsiteEndpoint))
 		ctx.Export("originHostname", bucket.WebsiteEndpoint)
 		ctx.Export("cdnURL", pulumi.Sprintf("https://%s", cdn.DomainName))
 		ctx.Export("cdnHostname", cdn.DomainName)
-		ctx.Export("PolicyArn", policy.Arn)
 		return nil
 
 	})
