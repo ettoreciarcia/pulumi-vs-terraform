@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/pulumi/pulumi-aws/sdk/v5/go/aws/cloudfront"
+	"github.com/pulumi/pulumi-aws/sdk/v5/go/aws/iam"
 	"github.com/pulumi/pulumi-aws/sdk/v5/go/aws/route53"
 	"github.com/pulumi/pulumi-aws/sdk/v5/go/aws/s3"
 	synced "github.com/pulumi/pulumi-synced-folder/sdk/go/synced-folder"
@@ -162,11 +163,33 @@ func main() {
 			return err
 		}
 
+		//Create iam policy to grant all permission on s3 bucket and cloudfront
+
+		json0 := string(tmpJSON0)
+		policy, err := iam.NewPolicy(ctx, "policy", &iam.PolicyArgs{
+			Path:        pulumi.String("/"),
+			Description: pulumi.String("My test policy"),
+			Policy:      pulumi.String(json0),
+		})
+		if err != nil {
+			return err
+		}
+
+		//attacch this policy to existing user demo-iac-golang-napoli
+		_, err = iam.NewUserPolicyAttachment(ctx, "test-attach", &iam.UserPolicyAttachmentArgs{
+			User:      pulumi.String("demo-iac-golang-napoli"),
+			PolicyArn: policy.Arn,
+		})
+		if err != nil {
+			return err
+		}
+
 		// Export the URLs and hostnames of the bucket and distribution.
 		ctx.Export("originURL", pulumi.Sprintf("http://%s", bucket.WebsiteEndpoint))
 		ctx.Export("originHostname", bucket.WebsiteEndpoint)
 		ctx.Export("cdnURL", pulumi.Sprintf("https://%s", cdn.DomainName))
 		ctx.Export("cdnHostname", cdn.DomainName)
 		return nil
+
 	})
 }
